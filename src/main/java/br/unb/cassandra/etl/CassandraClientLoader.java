@@ -11,8 +11,8 @@ public class CassandraClientLoader {
     public static final String KEYSPACE = "bolsafamilia";
     public static final String TABLE = "bf";
 
-    private String insertCmd = "INSERT INTO %s.%s (ID, UF, CODIGO_MUNICIPIO, NOME_MUNICIPIO, NOME_BENEFICIARIO, VALOR_PAGO, MES_ANO) " +
-                               " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public static final String INSERT = "INSERT INTO %s.%s (ID, UF, CODIGO_MUNICIPIO, NOME_MUNICIPIO, NOME_BENEFICIARIO, VALOR_PAGO, MES_ANO) " +
+                                        " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     public boolean connect() {
         cluster = Cluster.builder().addContactPoint(host).build();
@@ -29,7 +29,7 @@ public class CassandraClientLoader {
     // TODO: use BATCH insert to speedup?
     public void insert(Registro registro) {
 
-       PreparedStatement pstmt = session.prepare(String.format(insertCmd, KEYSPACE, TABLE));
+       PreparedStatement pstmt = session.prepare(String.format(INSERT, KEYSPACE, TABLE));
 
        BoundStatement bstmt = pstmt.bind(UUIDs.timeBased(),
                                          registro.getUf(),

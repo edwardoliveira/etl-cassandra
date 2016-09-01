@@ -1,0 +1,8 @@
+wc -l ~/Downloads/201606_BolsaFamiliaFolhaPagamento.csv
+13849867 /home/eribeiro/Downloads/201606_BolsaFamiliaFolhaPagamento.csv
+
+
+* Adicionar indices de baixa cardinalidade para UF
+* Colocar VALOR_PAGO como CLUSTERING KEY da chave primária
+* Usar SASI indexes para NOME_BENEFICIARIO? NOME_MUNICIPIO? CODIGO_MUNICIPIO?
+
