@@ -3,7 +3,7 @@ package br.unb.cassandra.etl;
 import com.datastax.driver.core.*;
 import com.datastax.driver.core.utils.UUIDs;
 
-public class CassandraLoader {
+public class CassandraClientLoader {
 
     private Cluster cluster;
     private Session session;
@@ -24,6 +24,7 @@ public class CassandraLoader {
         if (cluster != null) cluster.close();
     }
 
+    // TODO: use BATCH insert to speedup?
     public void insert(Registro registro) {
 
        PreparedStatement pstmt = session.prepare(insertCmd);

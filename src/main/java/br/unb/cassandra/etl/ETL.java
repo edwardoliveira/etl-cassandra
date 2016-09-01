@@ -15,7 +15,7 @@ public class ETL {
 
     private void doLoad(String filename) {
 
-        CassandraLoader cassandraLoader = new CassandraLoader();
+        CassandraClientLoader cassandraLoader = new CassandraClientLoader();
         cassandraLoader.connect();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filename), Charset.forName("ISO-8859-1")))) {
