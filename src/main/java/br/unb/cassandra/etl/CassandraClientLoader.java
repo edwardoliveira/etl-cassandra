@@ -8,13 +8,15 @@ public class CassandraClientLoader {
     private Cluster cluster;
     private Session session;
     private String host = "127.0.0.1";
-    private String keyspace = "bolsafamilia";
-    private String insertCmd = "INSERT INTO BF (ID, UF, CODIGO_MUNICIPIO, NOME_MUNICIPIO, NOME_BENEFICIARIO, VALOR_PAGO, MES_ANO) " +
+    public static final String KEYSPACE = "bolsafamilia";
+    public static final String TABLE = "bf";
+
+    private String insertCmd = "INSERT INTO %s.%s (ID, UF, CODIGO_MUNICIPIO, NOME_MUNICIPIO, NOME_BENEFICIARIO, VALOR_PAGO, MES_ANO) " +
                                " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     public boolean connect() {
         cluster = Cluster.builder().addContactPoint(host).build();
-        session = cluster.connect(keyspace);
+        session = cluster.connect(KEYSPACE);
         return !session.isClosed();
     }
 
@@ -27,14 +29,14 @@ public class CassandraClientLoader {
     // TODO: use BATCH insert to speedup?
     public void insert(Registro registro) {
 
-       PreparedStatement pstmt = session.prepare(insertCmd);
+       PreparedStatement pstmt = session.prepare(String.format(insertCmd, KEYSPACE, TABLE));
 
        BoundStatement bstmt = pstmt.bind(UUIDs.timeBased(),
                                          registro.getUf(),
                                          registro.getCodigoMunicipio(),
                                          registro.getNomeMunicipio(),
                                          registro.getNomeBeneficiario(),
-                                         Float.parseFloat(registro.getValorPago()),
+                                         Float.parseFloat(registro.getValorPago().replace(",", "")),
                                          registro.getMesAno());
        session.execute(bstmt);
     }
