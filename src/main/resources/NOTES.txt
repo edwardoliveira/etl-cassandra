@@ -2,6 +2,23 @@ wc -l ~/Downloads/201606_BolsaFamiliaFolhaPagamento.csv
 13849867 /home/eribeiro/Downloads/201606_BolsaFamiliaFolhaPagamento.csv
 
 
+// não fiz o truncate da tabela antes de rodar novamente. :/
+cqlsh:bolsafamilia> select count(*) from bf;
+
+ count
+----------
+ 13877421
+
+
+
+Tempo de carga: 99 min
+
+Number of keys (estimate): 13726142
+
+$ du -sch ~/apache-cassandra-3.0.8/data/
+1,1G	/home/eribeiro/apache-cassandra-3.0.8/data/
+1,1G	total
+
 * Adicionar indices de baixa cardinalidade para UF
 * Colocar VALOR_PAGO como CLUSTERING KEY da chave primária
 * Usar SASI indexes para NOME_BENEFICIARIO? NOME_MUNICIPIO? CODIGO_MUNICIPIO?

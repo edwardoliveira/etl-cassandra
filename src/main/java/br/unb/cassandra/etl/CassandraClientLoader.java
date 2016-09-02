@@ -10,7 +10,6 @@ public class CassandraClientLoader {
     private String host = "127.0.0.1";
     public static final String KEYSPACE = "bolsafamilia";
     public static final String TABLE = "bf";
-
     public static final String INSERT = "INSERT INTO %s.%s (ID, UF, CODIGO_MUNICIPIO, NOME_MUNICIPIO, NOME_BENEFICIARIO, VALOR_PAGO, MES_ANO) " +
                                         " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
